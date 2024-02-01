@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            cursor: none; /* Hide the default cursor */
+            position: relative;
+        }
+
+        #hello {
+            font-family: Verdana, sans-serif;
+            font-size: 5em;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .neon {
+            text-shadow: 0 0 10px;
+            transition: color 0.5s ease-in-out;
+        }
+
+        .neon:hover {
+            color: #f0f; /* Hover neon color (fuchsia) */
+        }
+
+        #letterO:hover {
+            color: #00f !important; /* Change the last 'O' to blue on hover */
+        }
+
+        #custom-cursor {
+            position: fixed;
+            pointer-events: none;
+            width: 50px;
+            height: auto;
+            display: none;
+            user-select: none;
+        }
+
+        #watermark {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+            font-family: calibri;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="hello">
+        <span class="neon" id="letterH">H</span>
+        <span class="neon" id="letterE">E</span>
+        <span class="neon" id="letterL1">L</span>
+        <span class="neon" id="letterL2">L</span>
+        <span class="neon" id="letterO">O</span>
+    </div>
+
+    <img src="https://www.pngmart.com/files/22/Cursor-PNG-Transparent.png" alt="Custom Cursor" id="custom-cursor">
+
+    <div id="watermark">SINEFFORT</div>
+
+    <script>
+        // Get all neon elements
+        const neonElements = document.querySelectorAll('.neon');
+
+        // Define initial neon colors
+        const initialColors = ['#00f', '#0ff', '#00ffcc', '#00ccff', '#f0f'];
+
+        // Assign initial colors to each neon element
+        neonElements.forEach((element, index) => {
+            element.style.color = initialColors[index];
+        });
+
+        // Add event listener for hover effect
+        neonElements.forEach((element, index) => {
+            element.addEventListener('mouseover', () => {
+                // Change color to fuchsia on hover
+                element.style.color = '#f0f';
+            });
+
+            element.addEventListener('mouseout', () => {
+                // Revert to the initial color on mouseout
+                element.style.color = initialColors[index];
+            });
+        });
+
+        // Custom cursor functionality
+        const customCursor = document.getElementById('custom-cursor');
+
+        function updateCursorPosition(e) {
+            customCursor.style.left = `${e.clientX}px`;
+            customCursor.style.top = `${e.clientY}px`;
+            customCursor.style.display = 'block';
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            // Use requestAnimationFrame for smoother cursor movement
+            requestAnimationFrame(() => updateCursorPosition(e));
+        });
+
+        document.addEventListener('mouseout', () => {
+            customCursor.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
